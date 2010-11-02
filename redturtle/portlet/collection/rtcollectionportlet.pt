@@ -1,0 +1,31 @@
+<div i18n:domain="redturtle.portlet.collection"
+    tal:omit-tag=""
+	tal:define="mtool context/portal_membership;
+	            plone_view nocall:context/@@plone;
+				normalizeString nocall:plone_view/normalizeString;
+				portal_url nocall:context/portal_url;
+				portal python:portal_url.getPortalObject();
+				portal_properties nocall:portal/portal_properties;
+				site_properties portal_properties/site_properties;
+	            isAnon mtool/isAnonymousUser;
+				toLocalizedTime nocall:plone_view/toLocalizedTime;
+				collection view/collection;
+				collection_path python:'/'.join(collection.getPhysicalPath());
+				callable_path string:here$collection_path/${view/data/template_id|string:base_collection_portlet_view}/macros/listing;
+				query_results view/results;
+				">
+	
+	<tal:newhere define="here nocall:collection;
+	                     context nocall:here;">
+		
+		<tal:comment condition="nothing">
+			Test if this redefine of here and context is someway dangerous/slow/bad/evil/...
+		</tal:comment>
+		
+    <tal:subview metal:use-macro="python:path(callable_path)">
+		Subview
+    </tal:subview>
+	</tal:newhere>
+   
+</div>
+

@@ -1,0 +1,42 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:five="http://namespaces.zope.org/five"
+	xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:genericsetup="http://namespaces.zope.org/genericsetup"
+    xmlns:plone="http://namespaces.plone.org/plone"
+    i18n_domain="redturtle.portlet.collection">
+
+    <five:registerPackage package="." initialize=".initialize" />
+
+    <genericsetup:registerProfile
+       name="default"
+       title="Collection portlet with custom view"
+       directory="profiles/default"
+       description=""
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+
+     <!-- Register the portlet -->
+
+     <!-- If the portlet has no configurable parameters, you can remove
+          the EditForm declaration in rtcollectionportlet.py and delete
+          the 'editview' attribute from this statement.
+       -->
+	<browser:resourceDirectory
+           name="rt-portlet-collection-css"
+           directory="css" />
+
+     <plone:portlet
+         name="redturtle.portlet.collection.RTCollectionPortlet"
+         interface=".rtcollectionportlet.IRTCollectionPortlet"
+         assignment=".rtcollectionportlet.Assignment"
+         view_permission="zope2.View"
+         edit_permission="cmf.ManagePortal"
+         renderer=".rtcollectionportlet.Renderer"
+         addview=".rtcollectionportlet.AddForm"
+         editview=".rtcollectionportlet.EditForm"
+         />
+
+  <include file="skins.zcml" />
+
+</configure>

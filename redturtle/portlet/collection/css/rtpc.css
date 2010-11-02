@@ -1,0 +1,18 @@
+
+dd.rtCollectionPortlet .tileImage {
+	float:left;
+	margin: 3px 5px 3px 0px;
+}
+
+a.rss_feed,
+a.rss_feed:link,
+a.rss_feed:visited
+{
+	display: block;
+	float:right;
+	text-decoration:none;
+}
+
+a.rss_feed:hover{
+	text-decoration:underline;
+}
