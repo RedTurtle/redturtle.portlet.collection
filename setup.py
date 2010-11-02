@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2.3'
+version = '0.2.4dev'
 
 setup(name='redturtle.portlet.collection',
       version=version,
@@ -18,7 +18,7 @@ setup(name='redturtle.portlet.collection',
       keywords='',
       author='RedTurtle Technology',
       author_email='sviluppoplone@redturtle.net',
-      url='https://plone.org/products/redturtle.portlet.collection',
+      url='http://plone.org/products/redturtle.portlet.collection',
       license='GPL',
       packages=find_packages(exclude=['ez_setup']),
       namespace_packages=['redturtle', 'redturtle.portlet'],
