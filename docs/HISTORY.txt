@@ -5,7 +5,8 @@ Changelog
 ------------------
 
 * Fixed project URL
-* Added Css style
+* Added CSS style field [micecchi]
+* Added translations [micecchi]
 
 0.2.3 (2010-10-22)
 ------------------
