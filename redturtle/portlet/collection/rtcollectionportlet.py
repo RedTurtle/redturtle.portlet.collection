@@ -21,28 +21,40 @@ class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
     """
 
-    link_text = schema.TextLine(title=_(u'Custom "more..." label'),
-                                description=_(u'Fill this to show a different label for the "more..." link'),
+    link_text = schema.TextLine(title=_("custom_more_label",
+                                        default=u'Custom "more..." label'),
+                                description=_("custom_more_label_help",
+                                              default=u'Fill this to show a different label for the "more..." link'),
                                 required=False)
 
-    no_elements_text = schema.TextLine(title=_(u'Text on "no elements found"'),
-                                               description=_(u'Render template can use this to show a custom text when no collection shows noe elements.'),
+    no_elements_text = schema.TextLine(title=_("no_elements_text_label",
+                                               default=u'Text on "no elements found"'),
+                                               description=_("no_elements_text_label_help",
+                                                             default=u'Render template can use this to show a custom text when no collection shows noe elements.'),
                                                required=False)
     
-#    link_value = schema.TextLine(title=_(u'Custom link'),
-#                                description=_(u'Fill this with the relative link of the archive' ),
-#                                required=False)
-         
-    check_rss = schema.Bool(title=_(u'Show RSS link'),
-                            description=_(u'Check this box to show the RSS link for the portlet'),
+    check_rss = schema.Bool(title=_("check_rss_label",
+                                    default=u'Show RSS link'),
+                            description=_("check_rss_label_help",
+                                          default=u'Check this box to show the RSS link for the portlet'),
                             required=False)
 
-    div_id = schema.TextLine(title=_(u'Portlet\'s HTML id'),
-                                description=_(u'Fill this to  assign an id to the portlet (for style purpose)'),
+    css_class = schema.TextLine(title=_("css_class_label",
+                                        default=u'Portlet\'s CSS class'),
+                                  description=_("css_class_label_help",
+                                                default=u'Fill this to  assign a CSS class to the portlet (for style purpose)'),
+                                  required=False)
+    
+    div_id = schema.TextLine(title=_("div_id_label",
+                                     default=u'Portlet\'s HTML id'),
+                                description=_("div_id_label_help",
+                                              default=u'Fill this to  assign an id to the portlet (for style purpose)'),
                                 required=False)
 
-    template_id = schema.TextLine(title=_(u'Template Id'),
-                                  description=_(u"Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
+    template_id = schema.TextLine(title=_("template_id_label",
+                                          default=u'Template Id'),
+                                  description=_("template_id_label_help",
+                                                default=u"Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
                                   default=u"base_collection_portlet_view",
                                   required=True)
 
@@ -61,10 +73,11 @@ class Assignment(BaseCollectionPortletAssignment):
     div_id =""
     template_id = 'base_collection_portlet_view'
     no_elements_text = ''
-
+    css_class=""
+    
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True,div_id="",
                  link_text=u'',link_value='',check_rss=False, show_dates=False,
-                 template_id='base_collection_portlet_view', no_elements_text=''):
+                 template_id='base_collection_portlet_view', no_elements_text='',css_class=""):
         BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates)
         self.link_text = link_text
         self.check_rss = check_rss
@@ -72,6 +85,7 @@ class Assignment(BaseCollectionPortletAssignment):
         self.div_id = div_id
         self.template_id = template_id
         self.no_elements_text = no_elements_text
+        self.css_class=css_class
         
 class Renderer(BaseCollectionPortletRenderer):
     """Portlet renderer.
