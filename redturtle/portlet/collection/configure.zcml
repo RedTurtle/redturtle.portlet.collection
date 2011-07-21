@@ -33,7 +33,7 @@
          interface=".rtcollectionportlet.IRTCollectionPortlet"
          assignment=".rtcollectionportlet.Assignment"
          view_permission="zope2.View"
-         edit_permission="cmf.ManagePortal"
+         edit_permission="plone.app.portlets.ManagePortlets"
          renderer=".rtcollectionportlet.Renderer"
          addview=".rtcollectionportlet.AddForm"
          editview=".rtcollectionportlet.EditForm"
