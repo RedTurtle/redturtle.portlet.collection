@@ -1,9 +1,15 @@
 Changelog
 =========
 
+0.2.7 (Unreleased)
+------------------
+
+* Fixed RSS icon field in the example template [keul]
+
 0.2.6 (2011-07-21)
 ------------------
-* changed edit_permission to ManagePortlets [micecchi]
+
+* changed edit_permission to "ManagePortlets" [micecchi]
 
 0.2.5 (2011-04-05)
 ------------------
