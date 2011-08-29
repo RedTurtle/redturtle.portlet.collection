@@ -20,7 +20,7 @@ msgstr "Aggiungi una portlet collezioni con vista custom"
 
 #: ./rtcollectionportlet.py:178
 msgid "Edit Collection portlet with custom view"
-msgstr "Modifica portltet collezioni con vista custom"
+msgstr "Modifica portlet collezioni con vista custom"
 
 #: ./rtcollectionportlet.py:162
 msgid "This portlet display a listing of items from a Collection."
