@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-04-01 14:13+0000\n"
+"POT-Creation-Date: 2011-08-29 13:14+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: Andrea Cecchi <andrea.cecchi@redturtle.net>\n"
 "Language-Team: RedTurtle <sviluppoplone@redturtle.net>\n"
@@ -14,74 +14,87 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: redturtle.portlet.collection\n"
 
-#: ./rtcollectionportlet.py:124
+#: ./rtcollectionportlet.py:161
 msgid "Add Collection portlet with custom view"
 msgstr "Aggiungi una portlet collezioni con vista custom"
 
-#: ./rtcollectionportlet.py:140
+#: ./rtcollectionportlet.py:178
 msgid "Edit Collection portlet with custom view"
 msgstr "Modifica portltet collezioni con vista custom"
 
-#: ./rtcollectionportlet.py:125
+#: ./rtcollectionportlet.py:162
 msgid "This portlet display a listing of items from a Collection."
 msgstr "Questa portlet mostra una lista di elementi da una Collezione."
 
 #. Default: "Show RSS link"
-#: ./rtcollectionportlet.py:36
+#: ./rtcollectionportlet.py:44
 msgid "check_rss_label"
 msgstr "Mostra il link RSS"
 
 #. Default: "Check this box to show the RSS link for the portlet"
-#: ./rtcollectionportlet.py:38
+#: ./rtcollectionportlet.py:46
 msgid "check_rss_label_help"
 msgstr "Seleziona questo campo per mostrare il link RSS per la portlet"
 
 #. Default: "Portlet's CSS class"
-#: ./rtcollectionportlet.py:42
+#: ./rtcollectionportlet.py:50
 msgid "css_class_label"
 msgstr "Classe CSS per la portlet"
 
 #. Default: "Fill this to  assign a CSS class to the portlet (for style purpose)"
-#: ./rtcollectionportlet.py:44
+#: ./rtcollectionportlet.py:52
 msgid "css_class_label_help"
 msgstr "Riempi questo campo per assegnare una classe CSS alla portlet"
 
 #. Default: "Custom \"more...\" label"
-#: ./rtcollectionportlet.py:24
+#: ./rtcollectionportlet.py:25
 msgid "custom_more_label"
 msgstr "Etichetta \"more...\" personalizzata"
 
 #. Default: "Fill this to show a different label for the \"more...\" link"
-#: ./rtcollectionportlet.py:26
+#: ./rtcollectionportlet.py:27
 msgid "custom_more_label_help"
 msgstr "Riempi questo campo per mostrare un'etichetta differente per il link \"more\""
 
+#. Default: "Select an object in the site, for the \"more...\" link. If empty, the link will be the collection."
+#: ./rtcollectionportlet.py:33
+msgid "custom_more_target_help"
+msgstr "Seleziona un oggetto nel sito, per il link a \"more...\". Se vuoto, il link porterà alla collezione di riferimento."
+
+#. Default: "Custom \"more...\" target"
+#: ./rtcollectionportlet.py:31
+msgid "custom_more_target_label"
+msgstr "Riferimento per il link \"more...\""
+
 #. Default: "Portlet's HTML id"
-#: ./rtcollectionportlet.py:48
+#: ./rtcollectionportlet.py:56
 msgid "div_id_label"
 msgstr "Id HTML della portlet"
 
 #. Default: "Fill this to  assign an id to the portlet (for style purpose)"
-#: ./rtcollectionportlet.py:50
+#: ./rtcollectionportlet.py:58
 msgid "div_id_label_help"
 msgstr "Riempi questo campo per assegnare un id alla portlet"
 
 #. Default: "Text on \"no elements found\""
-#: ./rtcollectionportlet.py:30
+#: ./rtcollectionportlet.py:38
 msgid "no_elements_text_label"
 msgstr "Testo per \"nessun elemento trovato\""
 
 #. Default: "Render template can use this to show a custom text when no collection shows noe elements."
-#: ./rtcollectionportlet.py:32
+#: ./rtcollectionportlet.py:40
 msgid "no_elements_text_label_help"
 msgstr "Il template può usare questo testo per mostrare un testo personalizzato quanto la collezione non ha risultati"
 
 #. Default: "Template Id"
-#: ./rtcollectionportlet.py:54
+#: ./rtcollectionportlet.py:62
 msgid "template_id_label"
 msgstr "Template Id"
 
 #. Default: "Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"
-#: ./rtcollectionportlet.py:56
+#: ./rtcollectionportlet.py:64
 msgid "template_id_label_help"
-msgstr "Id del template da usare per mostrare questa collezione\nTutti gli altri parametri impostati possono essere o non essere usati dal template scelto"
+msgstr ""
+"Id del template da usare per mostrare questa collezione\n"
+"Tutti gli altri parametri impostati possono essere o non essere usati dal template scelto"
+

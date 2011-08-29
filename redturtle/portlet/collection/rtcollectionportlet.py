@@ -1,21 +1,22 @@
-from zope.interface import implements
-
-from plone.portlets.interfaces import IPortletDataProvider
-from plone.app.portlets.portlets import base
-
-from plone.memoize.instance import memoize
 from DateTime import DateTime
-
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
-from plone.portlet.collection.collection import AddForm as BaseCollectionPortletAddForm
-from plone.portlet.collection.collection import Assignment as BaseCollectionPortletAssignment
-from plone.portlet.collection.collection import EditForm as BaseCollectionPortletEditForm
-from plone.portlet.collection.collection import ICollectionPortlet
-from plone.portlet.collection.collection import Renderer as BaseCollectionPortletRenderer
+from plone.app.portlets.portlets import base
+from plone.app.vocabularies.catalog import SearchableTextSourceBinder
+from plone.memoize.instance import memoize
+from plone.portlet.collection.collection import \
+    AddForm as BaseCollectionPortletAddForm, \
+    Assignment as BaseCollectionPortletAssignment, \
+    EditForm as BaseCollectionPortletEditForm, ICollectionPortlet, \
+    Renderer as BaseCollectionPortletRenderer
+from plone.portlets.interfaces import IPortletDataProvider
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
 from zope.formlib import form
+from zope.interface import implements
+from zope.component import getMultiAdapter
+
+
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
@@ -26,6 +27,13 @@ class IRTCollectionPortlet(ICollectionPortlet):
                                 description=_("custom_more_label_help",
                                               default=u'Fill this to show a different label for the "more..." link'),
                                 required=False)
+
+    target_more = schema.Choice(title=_("custom_more_target_label",
+                                        default=u'Custom "more..." target'),
+                                  description=_("custom_more_target_help",
+                                                default=u'Select an object in the site, for the "more..." link. If empty, the link will be the collection.'),
+                                  required=False,
+                                  source=SearchableTextSourceBinder({'sort_on':'getObjPositionInParent'}, default_query='path:'))
 
     no_elements_text = schema.TextLine(title=_("no_elements_text_label",
                                                default=u'Text on "no elements found"'),
@@ -74,10 +82,11 @@ class Assignment(BaseCollectionPortletAssignment):
     template_id = 'base_collection_portlet_view'
     no_elements_text = ''
     css_class=""
+    target_more=None
     
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True,div_id="",
                  link_text=u'',link_value='',check_rss=False, show_dates=False,
-                 template_id='base_collection_portlet_view', no_elements_text='',css_class=""):
+                 template_id='base_collection_portlet_view', no_elements_text='',css_class="",target_more=None):
         BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates)
         self.link_text = link_text
         self.check_rss = check_rss
@@ -86,6 +95,7 @@ class Assignment(BaseCollectionPortletAssignment):
         self.template_id = template_id
         self.no_elements_text = no_elements_text
         self.css_class=css_class
+        self.target_more=target_more
         
 class Renderer(BaseCollectionPortletRenderer):
     """Portlet renderer.
@@ -111,6 +121,31 @@ class Renderer(BaseCollectionPortletRenderer):
     @property
     def available(self):
         return len(self.results()) or self.data.no_elements_text
+    
+    def getMoreUrl(self):
+        if self.data.target_more:
+            target=self.moreTarget()
+            if target:
+                return target.absolute_url()
+        return self.collection_url()
+        
+    @memoize
+    def moreTarget(self):
+        """ get the collection the portlet is pointing to"""
+        
+        target_path = self.data.target_more
+        if not target_path:
+            return None
+
+        if target_path.startswith('/'):
+            target_path = target_path[1:]
+        
+        if not target_path:
+            return None
+
+        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        portal = portal_state.portal()
+        return portal.restrictedTraverse(target_path, default=None)
 
 class AddForm(base.AddForm):
     """Portlet add form.
@@ -121,6 +156,7 @@ class AddForm(base.AddForm):
     """
     form_fields = form.Fields(IRTCollectionPortlet)
     form_fields['target_collection'].custom_widget = UberSelectionWidget
+    form_fields['target_more'].custom_widget = UberSelectionWidget
     
     label = _(u"Add Collection portlet with custom view")
     description = _(u"This portlet display a listing of items from a Collection.")
@@ -137,6 +173,7 @@ class EditForm(base.EditForm):
     """
     form_fields = form.Fields(IRTCollectionPortlet)
     form_fields['target_collection'].custom_widget = UberSelectionWidget
+    form_fields['target_more'].custom_widget = UberSelectionWidget
     
     label = _(u"Edit Collection portlet with custom view")
     description = _(u"This portlet display a listing of items from a Collection.")

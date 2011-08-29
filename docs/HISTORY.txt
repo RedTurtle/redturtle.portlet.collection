@@ -5,6 +5,7 @@ Changelog
 ------------------
 
 * Fixed RSS icon field in the example template [keul]
+* Added reference field for "more..." link [micecchi]
 
 0.2.6 (2011-07-21)
 ------------------
