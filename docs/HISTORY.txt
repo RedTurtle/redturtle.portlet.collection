@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.2.7 (Unreleased)
+0.2.7 (2011/08/29)
 ------------------
 
 * Fixed RSS icon field in the example template [keul]

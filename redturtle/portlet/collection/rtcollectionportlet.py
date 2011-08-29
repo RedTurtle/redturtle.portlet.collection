@@ -131,7 +131,7 @@ class Renderer(BaseCollectionPortletRenderer):
         
     @memoize
     def moreTarget(self):
-        """ get the collection the portlet is pointing to"""
+        """ get the target custom for more... link"""
         
         target_path = self.data.target_more
         if not target_path:
