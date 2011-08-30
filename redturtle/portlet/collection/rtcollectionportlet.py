@@ -38,13 +38,13 @@ class IRTCollectionPortlet(ICollectionPortlet):
     no_elements_text = schema.TextLine(title=_("no_elements_text_label",
                                                default=u'Text on "no elements found"'),
                                                description=_("no_elements_text_label_help",
-                                                             default=u'Render template can use this to show a custom text when no collection shows noe elements.'),
+                                                             default=u'Render template can use this to show a custom text when no collection shows no elements.'),
                                                required=False)
     
     check_rss = schema.Bool(title=_("check_rss_label",
                                     default=u'Show RSS link'),
                             description=_("check_rss_label_help",
-                                          default=u'Check this box to show the RSS link for the portlet'),
+                                          default=u'Check this box to show the RSS link for the portlet. If you check this and the "more..." url isn\'t a collection, the RSS link will be broken.'),
                             required=False)
 
     css_class = schema.TextLine(title=_("css_class_label",
@@ -122,13 +122,17 @@ class Renderer(BaseCollectionPortletRenderer):
     def available(self):
         return len(self.results()) or self.data.no_elements_text
     
-    def getMoreUrl(self):
+    def collection_url(self):
         if self.data.target_more:
             target=self.moreTarget()
             if target:
                 return target.absolute_url()
-        return self.collection_url()
-        
+        else:
+            collection = self.collection()
+            if collection:
+                return collection.absolute_url()
+        return None
+    
     @memoize
     def moreTarget(self):
         """ get the target custom for more... link"""

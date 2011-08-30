@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-08-29 13:14+0000\n"
+"POT-Creation-Date: 2011-08-30 09:26+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: redturtle.portlet.collection\n"
 
-#: ./rtcollectionportlet.py:161
+#: ./rtcollectionportlet.py:165
 msgid "Add Collection portlet with custom view"
 msgstr ""
 
-#: ./rtcollectionportlet.py:178
+#: ./rtcollectionportlet.py:182
 msgid "Edit Collection portlet with custom view"
 msgstr ""
 
-#: ./rtcollectionportlet.py:162
+#: ./rtcollectionportlet.py:166
 msgid "This portlet display a listing of items from a Collection."
 msgstr ""
 
@@ -34,7 +34,7 @@ msgstr ""
 msgid "check_rss_label"
 msgstr ""
 
-#. Default: "Check this box to show the RSS link for the portlet"
+#. Default: "Check this box to show the RSS link for the portlet. If you check this and the \"more...\" url isn't a collection, the RSS link will be broken."
 #: ./rtcollectionportlet.py:46
 msgid "check_rss_label_help"
 msgstr ""
@@ -84,7 +84,7 @@ msgstr ""
 msgid "no_elements_text_label"
 msgstr ""
 
-#. Default: "Render template can use this to show a custom text when no collection shows noe elements."
+#. Default: "Render template can use this to show a custom text when no collection shows no elements."
 #: ./rtcollectionportlet.py:40
 msgid "no_elements_text_label_help"
 msgstr ""
