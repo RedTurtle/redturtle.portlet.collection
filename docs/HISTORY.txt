@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.9 (2011/08/31)
+------------------
+
+* included plone.app.portlets package [micecchi]
+
 0.2.8 (2011/08/30)
 ------------------
 
