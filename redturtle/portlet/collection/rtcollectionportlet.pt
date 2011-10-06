@@ -10,12 +10,13 @@
 	            isAnon mtool/isAnonymousUser;
 				toLocalizedTime nocall:plone_view/toLocalizedTime;
 				collection view/collection;
-				collection_path python:'/'.join(collection.getPhysicalPath());
-				callable_path string:here$collection_path/${view/data/template_id|string:base_collection_portlet_view}/macros/listing;
 				query_results view/results;
-				">
+				"
+	tal:condition="python:collection">
 	
-	<tal:newhere define="here nocall:collection;
+	<tal:newhere define="collection_path python:'/'.join(collection.getPhysicalPath());
+                         callable_path string:here$collection_path/${view/data/template_id|string:base_collection_portlet_view}/macros/listing;
+				         here nocall:collection;
 	                     context nocall:here;">
 		
 		<tal:comment condition="nothing">

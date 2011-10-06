@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.10 (2011/10/10)
+------------------
+
+* added control in template for no-more existing collection [micecchi]
+
 0.2.9 (2011/08/31)
 ------------------
 
