@@ -24,7 +24,7 @@
 	    <dt class="portletHeader">
 	    		<a class="rss_feed"
 			    tal:condition="view/data/check_rss"
-			    tal:attributes="href string:$collection_url/RSS">
+			    tal:attributes="href view/rss_url">
 	             <img tal:attributes="src string:${context/portal_url}/rss.gif" alt="RSS icon"/>
 				 RSS feed
 	             </a>

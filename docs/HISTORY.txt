@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.2.11 (2012/03/19)
+------------------
+
+* added rss_url method that return the right RSS feed url for the collection [micecchi]
+
 0.2.10 (2011/10/10)
 ------------------
 
