@@ -4,9 +4,8 @@ from plone.app.portlets.portlets import base
 from plone.app.vocabularies.catalog import SearchableTextSourceBinder
 from plone.memoize.instance import memoize
 from plone.portlet.collection.collection import \
-    AddForm as BaseCollectionPortletAddForm, \
     Assignment as BaseCollectionPortletAssignment, \
-    EditForm as BaseCollectionPortletEditForm, ICollectionPortlet, \
+    ICollectionPortlet, \
     Renderer as BaseCollectionPortletRenderer
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
@@ -108,6 +107,17 @@ class Renderer(BaseCollectionPortletRenderer):
         BaseCollectionPortletRenderer.__init__(self, *args)
 
     render = _template
+
+    @property
+    def callable_path(self):
+        """
+        collection_path python:'/'.join(collection.getPhysicalPath());
+        callable_path string:here$collection_path/${view/data/template_id|string:base_collection_portlet_view}/macros/listing
+        """
+        collection_path = '/'.join(self.collection().getPhysicalPath());
+        template = self.data.template_id or 'base_collection_portlet_view'
+        return 'here%s/%s/macros/listing' % (collection_path, template)
+
 
     @property
     def title(self):

@@ -15,7 +15,7 @@
 <metal:listingmacro define-macro="listing">
 
 	<dl class=""
-        tal:attributes="id view/data/div_id;
+     tal:attributes="id view/data/div_id;
 		                class string:portlet rtCollectionPortlet ${class}"
 	    tal:define="collection_url view/collection_url;
 	                getIcon nocall:plone_view/getIcon;

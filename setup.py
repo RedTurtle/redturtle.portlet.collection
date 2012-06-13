@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '0.2.11'
+version = '0.3a'
 
 setup(name='redturtle.portlet.collection',
       version=version,
