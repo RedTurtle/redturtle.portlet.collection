@@ -9,6 +9,8 @@ Changelog
   [keul]
 * added a proper uninstall procedure
   [keul]
+* pyflakes cleanup
+  [keul]
 
 0.3a (2012/06/13)
 -----------------

@@ -1,12 +1,12 @@
+# -*- coding: utf-8 -*-
+
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
 from plone.app.portlets.portlets import base
 from plone.app.vocabularies.catalog import SearchableTextSourceBinder
 from plone.memoize.instance import memoize
 from plone.portlet.collection.collection import \
-    AddForm as BaseCollectionPortletAddForm, \
-    Assignment as BaseCollectionPortletAssignment, \
-    EditForm as BaseCollectionPortletEditForm, ICollectionPortlet, \
+    Assignment as BaseCollectionPortletAssignment, ICollectionPortlet, \
     Renderer as BaseCollectionPortletRenderer
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
