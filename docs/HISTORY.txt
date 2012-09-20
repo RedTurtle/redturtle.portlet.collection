@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.3 (Unreleased)
+0.3 (2012-09-20)
 ----------------
 
 * reverted changes done in version 0.3a because the often brakes on
