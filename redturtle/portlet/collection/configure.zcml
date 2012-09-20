@@ -13,23 +13,24 @@
 	
     <genericsetup:registerProfile
        name="default"
-       title="Collection portlet with custom view"
+       title="redturtle.portlet.collection"
        directory="profiles/default"
-       description=""
+       description="A simple collection portlet for Plone, where you manually choose your skins template id"
+       provides="Products.GenericSetup.interfaces.EXTENSION"
+       />
+    <genericsetup:registerProfile
+       name="uninstall"
+       title="redturtle.portlet.collection: uninstall"
+       directory="profiles/uninstall"
+       description="Remove redturtle.portlet.collection"
        provides="Products.GenericSetup.interfaces.EXTENSION"
        />
 
-     <!-- Register the portlet -->
-
-     <!-- If the portlet has no configurable parameters, you can remove
-          the EditForm declaration in rtcollectionportlet.py and delete
-          the 'editview' attribute from this statement.
-       -->
 	<browser:resourceDirectory
            name="rt-portlet-collection-css"
            directory="css" />
 
-     <plone:portlet
+    <plone:portlet
          name="redturtle.portlet.collection.RTCollectionPortlet"
          interface=".rtcollectionportlet.IRTCollectionPortlet"
          assignment=".rtcollectionportlet.Assignment"

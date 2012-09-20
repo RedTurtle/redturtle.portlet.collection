@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2011-08-30 09:26+0000\n"
+"POT-Creation-Date: 2012-09-20 14:04+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,85 +17,88 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: redturtle.portlet.collection\n"
 
-#: ./rtcollectionportlet.py:165
+msgid "A simple collection portlet for Plone, where you manually choose your skins template id"
+msgstr ""
+
+#: ../rtcollectionportlet.py:173
 msgid "Add Collection portlet with custom view"
 msgstr ""
 
-#: ./rtcollectionportlet.py:182
+#: ../rtcollectionportlet.py:189
 msgid "Edit Collection portlet with custom view"
 msgstr ""
 
-#: ./rtcollectionportlet.py:166
+#: ../rtcollectionportlet.py:174
 msgid "This portlet display a listing of items from a Collection."
 msgstr ""
 
 #. Default: "Show RSS link"
-#: ./rtcollectionportlet.py:44
+#: ../rtcollectionportlet.py:41
 msgid "check_rss_label"
 msgstr ""
 
 #. Default: "Check this box to show the RSS link for the portlet. If you check this and the \"more...\" url isn't a collection, the RSS link will be broken."
-#: ./rtcollectionportlet.py:46
+#: ../rtcollectionportlet.py:43
 msgid "check_rss_label_help"
 msgstr ""
 
 #. Default: "Portlet's CSS class"
-#: ./rtcollectionportlet.py:50
+#: ../rtcollectionportlet.py:47
 msgid "css_class_label"
 msgstr ""
 
 #. Default: "Fill this to  assign a CSS class to the portlet (for style purpose)"
-#: ./rtcollectionportlet.py:52
+#: ../rtcollectionportlet.py:49
 msgid "css_class_label_help"
 msgstr ""
 
 #. Default: "Custom \"more...\" label"
-#: ./rtcollectionportlet.py:25
+#: ../rtcollectionportlet.py:22
 msgid "custom_more_label"
 msgstr ""
 
 #. Default: "Fill this to show a different label for the \"more...\" link"
-#: ./rtcollectionportlet.py:27
+#: ../rtcollectionportlet.py:24
 msgid "custom_more_label_help"
 msgstr ""
 
 #. Default: "Select an object in the site, for the \"more...\" link. If empty, the link will be the collection."
-#: ./rtcollectionportlet.py:33
+#: ../rtcollectionportlet.py:30
 msgid "custom_more_target_help"
 msgstr ""
 
 #. Default: "Custom \"more...\" target"
-#: ./rtcollectionportlet.py:31
+#: ../rtcollectionportlet.py:28
 msgid "custom_more_target_label"
 msgstr ""
 
 #. Default: "Portlet's HTML id"
-#: ./rtcollectionportlet.py:56
+#: ../rtcollectionportlet.py:53
 msgid "div_id_label"
 msgstr ""
 
 #. Default: "Fill this to  assign an id to the portlet (for style purpose)"
-#: ./rtcollectionportlet.py:58
+#: ../rtcollectionportlet.py:55
 msgid "div_id_label_help"
 msgstr ""
 
 #. Default: "Text on \"no elements found\""
-#: ./rtcollectionportlet.py:38
+#: ../rtcollectionportlet.py:35
 msgid "no_elements_text_label"
 msgstr ""
 
 #. Default: "Render template can use this to show a custom text when no collection shows no elements."
-#: ./rtcollectionportlet.py:40
+#: ../rtcollectionportlet.py:37
 msgid "no_elements_text_label_help"
 msgstr ""
 
 #. Default: "Template Id"
-#: ./rtcollectionportlet.py:62
+#: ../rtcollectionportlet.py:59
 msgid "template_id_label"
 msgstr ""
 
 #. Default: "Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"
-#: ./rtcollectionportlet.py:64
+#: ../rtcollectionportlet.py:61
 msgid "template_id_label_help"
 msgstr ""
 

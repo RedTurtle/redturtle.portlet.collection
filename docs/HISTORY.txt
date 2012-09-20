@@ -1,6 +1,15 @@
 Changelog
 =========
 
+0.3 (Unreleased)
+----------------
+
+* reverted changes done in version 0.3a because the often brakes on
+  Plone 4.2. Re-fixed for Plone 4.2/Chameleon in the "old way"
+  [keul]
+* added a proper uninstall procedure
+  [keul]
+
 0.3a (2012/06/13)
 -----------------
 
@@ -63,7 +72,7 @@ Changelog
 0.2.1
 -----
 
-* BUG: The "more..." link was not show if the "ne element" text was used
+* BUG: The "more..." link was not show if the "no element" text was used
 
 0.2.0
 -----
