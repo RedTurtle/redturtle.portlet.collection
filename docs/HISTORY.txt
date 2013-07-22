@@ -4,7 +4,7 @@ Changelog
 0.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Added custom permission to add the portlet [cekk]
 
 
 0.3 (2012-09-20)

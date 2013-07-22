@@ -9,8 +9,15 @@
 
     <five:registerPackage package="." initialize=".initialize" />
     <i18n:registerTranslations directory="locales" />
-	<include package="plone.app.portlets" />
-	
+    <include package="plone.app.portlets" />
+    <include file="upgrades.zcml" />
+
+    <!--Register permission id-->
+    <permission 
+     id="redturtle.portlet.collection.AddCollectionPortlet"
+     title="redturtle.portlet.collection: Add redturtle portlet collection" 
+     />
+
     <genericsetup:registerProfile
        name="default"
        title="redturtle.portlet.collection"
@@ -35,7 +42,7 @@
          interface=".rtcollectionportlet.IRTCollectionPortlet"
          assignment=".rtcollectionportlet.Assignment"
          view_permission="zope2.View"
-         edit_permission="plone.app.portlets.ManagePortlets"
+         edit_permission="redturtle.portlet.collection.AddCollectionPortlet"
          renderer=".rtcollectionportlet.Renderer"
          addview=".rtcollectionportlet.AddForm"
          editview=".rtcollectionportlet.EditForm"
