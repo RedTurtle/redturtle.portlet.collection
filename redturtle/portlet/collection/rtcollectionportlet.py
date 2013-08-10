@@ -11,8 +11,25 @@ from plone.portlet.collection.collection import \
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
 from zope.formlib import form
-from zope.interface import implements
-from zope.component import getMultiAdapter
+from zope.interface import implements, Interface
+from zope.schema.interfaces import IVocabularyFactory
+from zope.interface.declarations import alsoProvides
+from zope.component._api import getAdapters
+from zope.component import getMultiAdapter, getAdapter
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+
+
+class IRTCollectionPortletRenderer(Interface):
+    """
+    Marker interface for rt collection portlet renderer. We need to mark
+    it 'cause we need to create a special adapter
+    """
+
+class IRTCollectionPortletTemplate(Interface):
+    """
+    Adapts this interface to allow your adapter get found from rt
+    collection portlet template vocabulary
+    """
 
 
 class IRTCollectionPortlet(ICollectionPortlet):
@@ -56,12 +73,16 @@ class IRTCollectionPortlet(ICollectionPortlet):
                                               default=u'Fill this to  assign an id to the portlet (for style purpose)'),
                                 required=False)
 
-    template_id = schema.TextLine(title=_("template_id_label",
-                                          default=u'Template Id'),
-                                  description=_("template_id_label_help",
-                                                default=u"Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
-                                  default=u"base_collection_portlet_view",
-                                  required=True)
+    template_id = schema.Choice(
+                      title=_("template_id_label",
+                              default=u"Select template to use"),
+                      description=_("template_id_label_help",
+                                    default=u"Select a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
+
+                      default=u"base_collection_portlet_view",
+                      vocabulary="redturtle.collection.portlet.templates",
+                      )
+
 
 
 class Assignment(BaseCollectionPortletAssignment):
@@ -96,6 +117,7 @@ class Assignment(BaseCollectionPortletAssignment):
 
 
 class Renderer(BaseCollectionPortletRenderer):
+    implements(IRTCollectionPortletRenderer)
     """Portlet renderer.
 
     This is registered in configure.zcml. The referenced page template is
@@ -115,6 +137,14 @@ class Renderer(BaseCollectionPortletRenderer):
         "manage portlets" screen. Here, we use the title that the user gave.
         """
         return self.header
+
+    @property
+    def render(self):
+        renderer = getattr(self.data, 'template_id', None)
+        if renderer is None:
+            self.data.template_id = 'base_collection_portlet_view'
+            renderer = 'base_collection_portlet_view'
+        return getAdapter(self, IRTCollectionPortletTemplate, renderer).render
 
     @property
     def available(self):
@@ -188,3 +218,16 @@ class EditForm(base.EditForm):
     form_fields['target_more'].custom_widget = UberSelectionWidget
     label = _(u"Edit Collection portlet with custom view")
     description = _(u"This portlet display a listing of items from a Collection.")
+
+
+def TemplatesVocabulary(context):
+    fake = Renderer(None, None, None, None, None)
+    adapters = getAdapters((fake, ), IRTCollectionPortletTemplate)
+    terms = []
+    for name, adapted in adapters:
+        title = getattr(adapted, '_human_readable_name', name)
+        terms.append(SimpleVocabulary.createTerm(name, name, _(title)))
+    return SimpleVocabulary(terms)
+
+alsoProvides(TemplatesVocabulary, IVocabularyFactory)
+

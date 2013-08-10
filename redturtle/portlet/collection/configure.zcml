@@ -9,6 +9,7 @@
 
     <five:registerPackage package="." initialize=".initialize" />
     <i18n:registerTranslations directory="locales" />
+	<include package=".adapters" />
 	<include package="plone.app.portlets" />
 	
     <genericsetup:registerProfile
@@ -41,6 +42,9 @@
          editview=".rtcollectionportlet.EditForm"
          />
 
-  <include file="skins.zcml" />
+  <utility
+      component=".rtcollectionportlet.TemplatesVocabulary"
+      provides="zope.schema.interfaces.IVocabularyFactory"
+      name="redturtle.collection.portlet.templates"/>
 
 </configure>

@@ -1,26 +1,25 @@
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
-      xmlns:tal="http://xml.zope.org/namespaces/tal"
-      xmlns:metal="http://xml.zope.org/namespaces/metal"
-      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      lang="en"
-      metal:use-macro="here/main_template/macros/master"
-      i18n:domain="plone">
-
-<body>
-
-    <div metal:fill-slot="main">
-    <metal:main-macro define-macro="main">
-
-
-<metal:listingmacro define-macro="listing">
-
+<div i18n:domain="redturtle.portlet.collection"
+     tal:define="mtool context/portal_membership;
+                 plone_view nocall:context/@@plone;
+                 normalizeString nocall:plone_view/normalizeString;
+                 portal_url nocall:context/portal_url;
+                 portal python:portal_url.getPortalObject();
+                 portal_properties nocall:portal/portal_properties;
+                 site_properties portal_properties/site_properties;
+                 isAnon mtool/isAnonymousUser;
+                 toLocalizedTime nocall:plone_view/toLocalizedTime;
+                 collection view/collection;
+                 query_results view/results;"
+    tal:condition="python:collection">
 	<dl class=""
-     tal:attributes="id view/data/div_id;
+        tal:attributes="id view/data/div_id;
 		                class string:portlet rtCollectionPortlet ${class}"
-	    tal:define="collection_url view/collection_url;
+        tal:define="collection_path python:'/'.join(collection.getPhysicalPath());
+                    here nocall:collection;
+                    context nocall:here;
+                    collection_url view/collection_url;
 	                getIcon nocall:plone_view/getIcon;
 					class view/data/css_class|nothing;">
-	
 	    <dt class="portletHeader">
 	    		<a class="rss_feed"
 			    tal:condition="view/data/check_rss"
@@ -101,13 +100,4 @@
 	    </dd>
 
 	</dl>
-
-
-</metal:listingmacro>
-
-
-    </metal:main-macro>
-    </div>
-
-</body>
-</html>
+</div>
