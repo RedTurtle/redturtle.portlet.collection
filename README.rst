@@ -3,19 +3,13 @@ Introduction
 
 A collection portlet that use a custom view template to show search results.
 
-User must manually put inside the "*Template Id*" field of the portlet the id of a Zope Page Template,
-commonly available in *portal_skins*.
-
-Seems crappy?
--------------
-
-Yes, this is not very user friendly, but this product save us from developing a lot of
-collection portlet clones!
+User can manually select a template ("Select template to use" field) from the available ones.
 
 Create you own template
 -----------------------
 
-Is simple, but start from the example you find in this product: check the *base_collection_portlet_view.pt* file.
+Everybody can create new template wrinting new adapter and providing related template.
+Take a look in the adapter folder of this package to see in which way you can do that.
 
 Credits
 =======
