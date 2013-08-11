@@ -4,7 +4,8 @@ Changelog
 0.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+* change the way used to render template;
+  now we have drop down menu selection [lucabel]
 
 
 0.3 (2012-09-20)
