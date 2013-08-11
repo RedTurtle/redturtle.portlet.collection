@@ -124,12 +124,8 @@ class Renderer(BaseCollectionPortletRenderer):
     rendered, and the implicit variable 'view' will refer to an instance
     of this class. Other methods can be added and referenced in the template.
     """
-    _template = ViewPageTemplateFile('rtcollectionportlet.pt')
-
     def __init__(self, *args):
         BaseCollectionPortletRenderer.__init__(self, *args)
-
-    render = _template
 
     @property
     def title(self):

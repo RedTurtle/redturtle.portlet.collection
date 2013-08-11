@@ -1,4 +1,4 @@
-from zope.component import getUtility, getMultiAdapter
+from zope.component import getUtility, getMultiAdapter, getAdapters
 
 from plone.portlets.interfaces import IPortletType
 from plone.portlets.interfaces import IPortletManager
@@ -102,6 +102,20 @@ class TestRenderer(TestCase):
         r.update()
         output = r.render()
         # TODO: Test output
+
+    def test_interfaces(self):
+        #Be sure the renderer implement
+        r = self.renderer(context=self.portal,
+                          assignment=rtcollectionportlet.Assignment())
+        self.failUnless(rtcollectionportlet.IRTCollectionPortletRenderer.providedBy(r))
+
+    def test_adapter_renderer(self):
+        #Be sure with a portlet renderer we are able to get adapter and so the real renderer
+        renderer = self.renderer(context=self.portal,
+                                 assignment=rtcollectionportlet.Assignment())
+        renderer_name = 'base_collection_portlet_view'
+        adapters = dict(getAdapters((renderer,), rtcollectionportlet.IRTCollectionPortletTemplate,))
+        self.assertTrue(renderer_name in adapters)
 
 
 def test_suite():
