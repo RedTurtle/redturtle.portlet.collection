@@ -20,3 +20,5 @@ msgstr ""
 msgid "A simple collection portlet for Plone, where you manually choose your skins template id"
 msgstr ""
 
+msgid "Default Renderer"
+msgstr ""

@@ -3,9 +3,11 @@
 from Acquisition import aq_inner
 from redturtle.portlet.collection.rtcollectionportlet import (IRTCollectionPortletRenderer,
                                                               IRTCollectionPortletTemplate)
+from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope.browserpage.viewpagetemplatefile import ViewPageTemplateFile
 from zope.component import adapts
 from zope.interface import implements
+from zope.i18n import translate
 
 
 class BaseRenderer(object):
@@ -27,5 +29,5 @@ class BaseRenderer(object):
 
 class DefaultRenderer(BaseRenderer):
 
-    _human_readable_name = 'Default Renderer' 
+    _human_readable_name = 'Default Renderer'
     _template = ViewPageTemplateFile('templates/default_renderer.pt')
