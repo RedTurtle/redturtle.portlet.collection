@@ -22,6 +22,7 @@ class BaseRenderer(object):
         self.collection_url = base.collection_url
         self.collection = base.collection
         self.base = base
+        self.rss_url = base.rss_url
 
     def render(self, *args, **kwargs):
         return self._template(*args, **kwargs)
