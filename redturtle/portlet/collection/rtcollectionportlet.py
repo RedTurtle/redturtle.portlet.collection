@@ -20,7 +20,7 @@ class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
     """
     image_ref = schema.Choice(title=_(u"Background image"),
-                                description=_(u"Insert an image that will be shown as background of the header"),
+                                description=_(u"Insert an image that will be shown as background under the header"),
                                 required=False,
                                 source=SearchableTextSourceBinder({'object_provides': IATImage.__identifier__},
                                                                    default_query='path:'))

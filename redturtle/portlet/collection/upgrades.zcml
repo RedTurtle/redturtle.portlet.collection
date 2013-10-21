@@ -2,7 +2,7 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:gs="http://namespaces.zope.org/genericsetup"
     i18n_domain="redturtle.portlet.collection">
-       
+
   <!-- Upgrade steps -->
   <gs:upgradeStep
         title="Upgrade redturtle.portlet.collection 0.4"
@@ -11,5 +11,13 @@
         destination="0.4"
         handler=".upgrades.to_0_4"
         profile="redturtle.portlet.collection:default" />
-       
+
+   <gs:upgradeStep
+        title="Upgrade redturtle.portlet.collection 0.4"
+        description="redturtle.portlet.collection upgrade step"
+        source="*"
+        destination="0.5"
+        handler=".upgrades.to_0_5"
+        profile="redturtle.portlet.collection:default" />
+
 </configure>
