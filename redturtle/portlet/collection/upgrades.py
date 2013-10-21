@@ -20,3 +20,9 @@ def to_0_4(context):
     """
     """
     context.runImportStepFromProfile(default_profile, 'rolemap')
+
+@upgrade('redturtle.portlet.collection', '0.5')
+def to_0_5(context):
+    """
+    """
+    context.runImportStepFromProfile(default_profile, 'portlets')

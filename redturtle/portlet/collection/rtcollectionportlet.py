@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 
+
+from Products.ATContentTypes.interface import IATImage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
 from plone.app.portlets.portlets import base
@@ -10,20 +12,25 @@ from plone.portlet.collection.collection import \
     Renderer as BaseCollectionPortletRenderer
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
+from zope.component import getMultiAdapter
 from zope.formlib import form
 from zope.interface import implements
-from zope.component import getMultiAdapter
-
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
     """
+    image_ref = schema.Choice(title=_(u"Background image"),
+                                description=_(u"Insert an image that will be shown as background under the header"),
+                                required=False,
+                                source=SearchableTextSourceBinder({'object_provides': IATImage.__identifier__},
+                                                                   default_query='path:'))
 
     link_text = schema.TextLine(title=_("custom_more_label",
                                         default=u'Custom "more..." label'),
                                 description=_("custom_more_label_help",
                                               default=u'Fill this to show a different label for the "more..." link'),
                                 required=False)
+
 
     target_more = schema.Choice(title=_("custom_more_target_label",
                                         default=u'Custom "more..." target'),
@@ -72,6 +79,7 @@ class Assignment(BaseCollectionPortletAssignment):
     """
     implements(IRTCollectionPortlet)
 
+    image_ref = None
     link_text = u''
     check_rss = False
     link_value = u""
@@ -82,9 +90,10 @@ class Assignment(BaseCollectionPortletAssignment):
     target_more = None
 
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True, div_id="",
-                 link_text=u'', link_value='', check_rss=False, show_dates=False,
+                 image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False,
                  template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None):
         BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates)
+        self.image_ref = image_ref
         self.link_text = link_text
         self.check_rss = check_rss
         self.link_value = link_value
@@ -119,6 +128,33 @@ class Renderer(BaseCollectionPortletRenderer):
     @property
     def available(self):
         return len(self.results()) or self.data.no_elements_text
+
+    def get_image_src(self):
+        """
+        get the soruce for image
+        """
+        target = self.get_image_path()
+        #this approach is better if you need to use diazo and replace
+        #'image_preview' with some other scale
+        return target.absolute_url() + '/image_preview'
+        #If you want use images view....
+        #scales = getMultiAdapter((target, self.request), name="images")
+        #return scales.tag('image', scale='preview')
+
+    def get_image_path(self):
+        target_path = self.data.image_ref
+        if not target_path:
+            return None
+
+        if target_path.startswith('/'):
+            target_path = target_path[1:]
+
+        if not target_path:
+            return None
+
+        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        portal = portal_state.portal()
+        return portal.restrictedTraverse(target_path, default=None)
 
     def collection_url(self):
         if self.data.target_more:
@@ -168,6 +204,7 @@ class AddForm(base.AddForm):
     """
     form_fields = form.Fields(IRTCollectionPortlet)
     form_fields['target_collection'].custom_widget = UberSelectionWidget
+    form_fields['image_ref'].custom_widget = UberSelectionWidget
     form_fields['target_more'].custom_widget = UberSelectionWidget
 
     label = _(u"Add Collection portlet with custom view")
@@ -185,6 +222,7 @@ class EditForm(base.EditForm):
     """
     form_fields = form.Fields(IRTCollectionPortlet)
     form_fields['target_collection'].custom_widget = UberSelectionWidget
+    form_fields['image_ref'].custom_widget = UberSelectionWidget
     form_fields['target_more'].custom_widget = UberSelectionWidget
     label = _(u"Edit Collection portlet with custom view")
     description = _(u"This portlet display a listing of items from a Collection.")
