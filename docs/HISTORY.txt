@@ -4,7 +4,7 @@ Changelog
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Add reference field relate to images; in this way user it's able to add header image to collection [lucabel]
 
 
 0.4 (2013-07-31)
