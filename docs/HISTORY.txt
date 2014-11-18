@@ -4,7 +4,7 @@ Changelog
 0.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- change the way to include template via z3c template not via skin
 
 
 0.4 (2013-07-31)

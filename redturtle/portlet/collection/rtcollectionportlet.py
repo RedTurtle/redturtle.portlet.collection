@@ -15,6 +15,22 @@ from zope import schema
 from zope.component import getMultiAdapter
 from zope.formlib import form
 from zope.interface import implements
+from zope import schema
+from zope.component._api import getAdapters, getAdapter
+from zope.formlib import form
+from zope.interface.interface import Interface
+from zope.schema.interfaces import IVocabularyFactory
+from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
+from zope.interface import implements
+from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
+from zope.interface.declarations import alsoProvides
+from Products.CMFPlone.utils import safe_hasattr
+
+
+
+BLACKLISTED_RENDERER = ['image_renderer', 'renderer_agenzie_viaggio',
+                        'renderer_simple_event', 'carousel_renderer']
+
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
@@ -30,7 +46,6 @@ class IRTCollectionPortlet(ICollectionPortlet):
                                 description=_("custom_more_label_help",
                                               default=u'Fill this to show a different label for the "more..." link'),
                                 required=False)
-
 
     target_more = schema.Choice(title=_("custom_more_target_label",
                                         default=u'Custom "more..." target'),
@@ -63,12 +78,48 @@ class IRTCollectionPortlet(ICollectionPortlet):
                                               default=u'Fill this to  assign an id to the portlet (for style purpose)'),
                                 required=False)
 
-    template_id = schema.TextLine(title=_("template_id_label",
-                                          default=u'Template Id'),
-                                  description=_("template_id_label_help",
-                                                default=u"Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
-                                  default=u"base_collection_portlet_view",
-                                  required=True)
+    template_id = schema.Choice(
+                          default=u"default_view",
+                          title=_("template_id_label", default=u'Template Id'),
+                          vocabulary="redturtle.collection.portlet.templates",
+                                     )
+
+
+class IAdvancedRTCollectionPortletRenderer(Interface):
+    """
+    Marker interface for adapter that provides information about
+    a template to use for the portlet rendering
+    """
+
+
+class IAdvancedRTCollectionSmartRenderer(Interface):
+    """
+    Marker interface for fake renderer
+    """
+
+
+class FakeRenderer(object):
+    implements(IAdvancedRTCollectionSmartRenderer)
+
+    def __init__(self):
+        for attr in ['request', 'context', 'data', 'results',
+                     'collection_url', 'collection', 'batch_nav_available',
+                     '_standard_results']:
+            setattr(self, attr, None)
+
+
+def TemplatesVocabulary(context):
+    fake = FakeRenderer()
+    adapters = getAdapters((fake, ), IAdvancedRTCollectionPortletRenderer)
+    terms = []
+    for name, adapted in adapters:
+        if name in BLACKLISTED_RENDERER:
+            continue
+        title = getattr(adapted, '__name__', name)
+        terms.append(SimpleVocabulary.createTerm(name, name, _(title)))
+    return SimpleVocabulary(terms)
+
+alsoProvides(TemplatesVocabulary, IVocabularyFactory)
 
 
 class Assignment(BaseCollectionPortletAssignment):
@@ -105,18 +156,16 @@ class Assignment(BaseCollectionPortletAssignment):
 
 
 class Renderer(BaseCollectionPortletRenderer):
+    implements(IAdvancedRTCollectionSmartRenderer)
     """Portlet renderer.
 
     This is registered in configure.zcml. The referenced page template is
     rendered, and the implicit variable 'view' will refer to an instance
     of this class. Other methods can be added and referenced in the template.
     """
-    _template = ViewPageTemplateFile('rtcollectionportlet.pt')
 
     def __init__(self, *args):
         BaseCollectionPortletRenderer.__init__(self, *args)
-
-    render = _template
 
     @property
     def title(self):
@@ -128,6 +177,14 @@ class Renderer(BaseCollectionPortletRenderer):
     @property
     def available(self):
         return len(self.results()) or self.data.no_elements_text
+
+    @property
+    def render(self):
+        renderer = getattr(self.data, 'template_id', None)
+        if renderer is None:
+            self.data.template_id = 'default_renderer'
+            renderer = 'default_renderer'
+        return getAdapter(self, IAdvancedRTCollectionPortletRenderer, renderer).render
 
     def get_image_src(self):
         """
