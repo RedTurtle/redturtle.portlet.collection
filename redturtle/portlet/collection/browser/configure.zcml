@@ -14,8 +14,4 @@
           name="default_renderer"
           factory=".advanced_rtpc_templates.DefaultRenderer" />
 
-    <adapter
-          name="news_renderer"
-          factory=".advanced_rtpc_templates.NewsRenderer" />
-
 </configure>

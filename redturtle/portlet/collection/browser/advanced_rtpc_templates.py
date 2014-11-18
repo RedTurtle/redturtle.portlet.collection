@@ -60,11 +60,6 @@ class BaseRenderer(object):
         return bool(self.results())
 
 
-class NewsRenderer(BaseRenderer):
-    __name__ = 'Notizie'
-    _template = ViewPageTemplateFile('templates/news_renderer.pt')
-
-
 class DefaultRenderer(BaseRenderer):
     __name__ = 'Template di default'
     _template = ViewPageTemplateFile('templates/default_renderer.pt')
