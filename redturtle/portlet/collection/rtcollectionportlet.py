@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-
+import random
 from Products.ATContentTypes.interface import IATImage
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
 from plone.app.portlets.portlets import base
 from plone.app.vocabularies.catalog import SearchableTextSourceBinder
@@ -15,26 +14,24 @@ from zope import schema
 from zope.component import getMultiAdapter
 from zope.formlib import form
 from zope.interface import implements
-from zope import schema
 from zope.component._api import getAdapters, getAdapter
-from zope.formlib import form
 from zope.interface.interface import Interface
 from zope.schema.interfaces import IVocabularyFactory
-from zope.schema.vocabulary import SimpleTerm, SimpleVocabulary
-from zope.interface import implements
-from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
+from zope.schema.vocabulary import SimpleVocabulary
 from zope.interface.declarations import alsoProvides
-from Products.CMFPlone.utils import safe_hasattr
-
-
-
-BLACKLISTED_RENDERER = ['image_renderer', 'renderer_agenzie_viaggio',
-                        'renderer_simple_event', 'carousel_renderer']
 
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
     """
+    target_collection = schema.Choice(
+        title=_(u"Target collection"),
+        description=_(u"Find the collection which provides the items to list"),
+        required=True,
+        source=SearchableTextSourceBinder(
+            {'portal_type': ('Topic', 'Collection', 'Folder')},
+            default_query='path:'))
+
     image_ref = schema.Choice(title=_(u"Background image"),
                                 description=_(u"Insert an image that will be shown as background of the header"),
                                 required=False,
@@ -113,8 +110,6 @@ def TemplatesVocabulary(context):
     adapters = getAdapters((fake, ), IAdvancedRTCollectionPortletRenderer)
     terms = []
     for name, adapted in adapters:
-        if name in BLACKLISTED_RENDERER:
-            continue
         title = getattr(adapted, '__name__', name)
         terms.append(SimpleVocabulary.createTerm(name, name, _(title)))
     return SimpleVocabulary(terms)
@@ -250,6 +245,49 @@ class Renderer(BaseCollectionPortletRenderer):
         portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
         portal = portal_state.portal()
         return portal.restrictedTraverse(target_path, default=None)
+
+    def _standard_results(self):
+        results = []
+        collection = self.collection()
+        if collection is not None and collection.portal_type in ['Collection', 'Topic']:
+            limit = self.data.limit
+            if limit and limit > 0:
+                # pass on batching hints to the catalog
+                results = collection.queryCatalog(batch=True, b_size=limit)
+                results = results._sequence
+            else:
+                results = collection.queryCatalog()
+        if collection.portal_type in ['Folder']:
+            limit = self.data.limit
+            if limit and limit > 0:
+                results = collection.getFolderContents(batch=True, b_size=limit)
+            else:
+                results = collection.getFolderContents()
+
+        if collection and limit and limit > 0:
+            results = results[:limit]
+        return results
+
+    def _random_results(self):
+        # intentionally non-memoized
+        results = []
+        collection = self.collection()
+        if collection is not None and collection.portal_type in ['Collection', 'Topic']:
+            results = collection.queryCatalog(sort_on=None)
+            if results is None:
+                return []
+
+        if collection.portal_type in ['Folder']:
+            results = collection.getFolderContents()
+            if results is None:
+                return []
+
+        limit = self.data.limit and min(len(results), self.data.limit) or 1
+        if collection and len(results) < limit:
+            limit = len(results)
+        results = random.sample(results, limit)
+
+        return results
 
 
 class AddForm(base.AddForm):
