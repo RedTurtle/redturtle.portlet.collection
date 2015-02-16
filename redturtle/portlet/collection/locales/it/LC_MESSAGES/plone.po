@@ -1,6 +1,3 @@
-# Translation of plone.pot to Italian
-# Giancarlo & Lele Gaifas, 2002-2009
-#
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
@@ -19,4 +16,4 @@ msgstr ""
 "X-Is-Fallback-For: it-ch it-it\n"
 
 msgid "Collection portlet with custom view"
-msgstr "Portlet collezione con vista custom"
+msgstr "Portlet collezione con vista personalizzabile"
