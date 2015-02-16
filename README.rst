@@ -6,16 +6,22 @@ A collection portlet that use a custom view template to show search results.
 User must manually put inside the "*Template Id*" field of the portlet the id of a Zope Page Template,
 commonly available in *portal_skins*.
 
+Please note: you can use a Zope 3 style @@view. 
+
 Seems crappy?
 -------------
 
 Yes, this is not very user friendly, but this product save us from developing a lot of
 collection portlet clones!
 
-Create you own template
------------------------
+Create your own template
+------------------------
 
-Is simple, but start from the example you find in this product: check the *base_collection_portlet_view.pt* file.
+It's simple, but we suggest you starting from the default template you will
+find inside the source of this product: check the
+`base_collection_portlet_view.pt`__ file.
+
+__ https://github.com/RedTurtle/redturtle.portlet.collection/blob/master/redturtle/portlet/collection/skins/customizable_collection_portlet/base_collection_portlet_view.pt
 
 Credits
 =======
