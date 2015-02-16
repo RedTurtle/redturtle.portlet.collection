@@ -8,18 +8,16 @@ Changelog
 - Fix rss icon [lucabel]
 - Add italian portlet name translation [lucabel]
 
-
 0.4 (2013-07-31)
 ----------------
 
 - Added custom permission to add the portlet [cekk]
 
-
 0.3 (2012-09-20)
 ----------------
 
-* reverted changes done in version 0.3a because the often brakes on
-  Plone 4.2. Re-fixed for Plone 4.2/Chameleon in the "old way"
+* reverted changes done in version 0.3a because lead to issues on Plone 4.2.
+  Re-fixed for Plone 4.2/Chameleon in the "old way"
   [keul]
 * added a proper uninstall procedure
   [keul]
