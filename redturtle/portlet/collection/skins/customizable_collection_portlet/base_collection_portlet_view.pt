@@ -16,7 +16,7 @@
 
     <dl class=""
      tal:attributes="id view/data/div_id;
-                        class string:portlet rtCollectionPortlet ${class}"
+                     class string:portlet rtCollectionPortlet ${class}"
         tal:define="collection_url view/collection_url;
                     getIcon nocall:plone_view/getIcon;
                     class view/data/css_class|nothing;">
@@ -24,8 +24,9 @@
                 <a class="rss_feed"
                 tal:condition="view/data/check_rss"
                 tal:attributes="href view/rss_url">
-                 <img tal:attributes="src string:${context/portal_url}/rss.png" alt="RSS icon"/>
-                 RSS feed
+                 <img tal:attributes="src string:${context/portal_url}/rss.png"
+                      i18n:attributes="alt" i18n:domain="plone"
+				      alt="RSS feed"/>
                  </a>
             <span class="portletTopLeft"></span>
             <a tal:attributes="href collection_url" tal:omit-tag="not:view/data/show_more">
@@ -35,7 +36,7 @@
         </dt>
         <dd class="portlet-image" tal:condition="view/data/image_ref">
         <tal:image tal:define="img_src view/get_image_src">
-            <img tal:attributes="src img_src; alt view/data/header"/>
+            <img alt="" tal:attributes="src img_src"/>
         </tal:image>
         </dd>
         <tal:events tal:repeat="obj query_results">
