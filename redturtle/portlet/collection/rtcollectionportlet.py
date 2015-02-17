@@ -91,8 +91,23 @@ class Assignment(BaseCollectionPortletAssignment):
 
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True, div_id="",
                  image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False,
-                 template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None):
-        BaseCollectionPortletAssignment.__init__(self, header=header, target_collection=target_collection, limit=limit, random=random, show_more=show_more, show_dates=show_dates)
+                 template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None,
+                 exclude_context=True):
+        try:
+            BaseCollectionPortletAssignment.__init__(self, header=header,
+                                                     target_collection=target_collection,
+                                                     limit=limit, random=random,
+                                                     show_more=show_more,
+                                                     show_dates=show_dates,
+                                                     exclude_context=exclude_context)
+        except TypeError:
+            # Lord of Immortals, forgive me for that ugliness but plone.portlet.collection 2.1.6 forced me
+            # to do this
+            BaseCollectionPortletAssignment.__init__(self, header=header,
+                                                     target_collection=target_collection,
+                                                     limit=limit, random=random,
+                                                     show_more=show_more,
+                                                     show_dates=show_dates)
         self.image_ref = image_ref
         self.link_text = link_text
         self.check_rss = check_rss
@@ -130,9 +145,6 @@ class Renderer(BaseCollectionPortletRenderer):
         return len(self.results()) or self.data.no_elements_text
 
     def get_image_src(self):
-        """
-        get the soruce for image
-        """
         target = self.get_image_path()
         #this approach is better if you need to use diazo and replace
         #'image_preview' with some other scale
