@@ -26,7 +26,7 @@
                 tal:attributes="href view/rss_url">
                  <img tal:attributes="src string:${context/portal_url}/rss.png"
                       i18n:attributes="alt" i18n:domain="plone"
-				      alt="RSS feed"/>
+                      alt="RSS feed"/>
                  </a>
             <span class="portletTopLeft"></span>
             <a tal:attributes="href collection_url" tal:omit-tag="not:view/data/show_more">
@@ -43,7 +43,8 @@
             <dd class="portletItem rtCollectionPortletItem"
                 tal:define="oddrow repeat/obj/odd;
                             item_icon python:getIcon(obj);
-                            item_path obj/getPath;"
+                            item_path obj/getPath;
+                            item_check_path python:item_path.replace('/'.join(portal.getPhysicalPath()), '');"
                 tal:attributes="class python:oddrow and 'portletItem even rtCollectionPortletItem' or 'portletItem odd rtCollectionPortletItem'">
                 <p class="rt_item">
                     <a href="#"
@@ -57,7 +58,7 @@
                     </a>
                 </p>
                 <img src="" alt=""
-                     tal:condition="exists:python:path('here'+item_path.replace('/'+portal.getId(), '')+'/image_thumb')"
+                     tal:condition="exists:python:path('here'+ item_check_path +'/image_thumb')"
                      tal:attributes="src string:${obj/getURL}/image_thumb;
                                      alt obj/Description;"
                      class="tileImage"/>
