@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.5 (unreleased)
+0.5 (2015-02-17)
 ----------------
 
 - Now compatible with the new feature introduced with plone.portlet.collection 2.1.6
