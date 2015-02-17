@@ -4,6 +4,7 @@ Changelog
 0.5 (unreleased)
 ----------------
 
+- Do not display "None" CSS class [keul]
 - Image grabbing works also for Plone sites not in the VHM root [keul]
 - Add reference field relate to images; in this way user it's able to add header image to collection [lucabel]
 - Fix rss icon [lucabel]

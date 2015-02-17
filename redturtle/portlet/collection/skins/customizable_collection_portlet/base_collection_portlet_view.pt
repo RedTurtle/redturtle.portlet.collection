@@ -15,15 +15,15 @@
 <metal:listingmacro define-macro="listing">
 
     <dl class=""
-     tal:attributes="id view/data/div_id;
-                     class string:portlet rtCollectionPortlet ${class}"
         tal:define="collection_url view/collection_url;
                     getIcon nocall:plone_view/getIcon;
-                    class view/data/css_class|nothing;">
-        <dt class="portletHeader">
+                    css_class view/data/css_class|nothing;"
+        tal:attributes="id view/data/div_id;
+                        class python:css_class and 'portlet rtCollectionPortlet '+css_class or 'portlet rtCollectionPortlet'">
+	        <dt class="portletHeader">
                 <a class="rss_feed"
-                tal:condition="view/data/check_rss"
-                tal:attributes="href view/rss_url">
+                   tal:condition="view/data/check_rss"
+                   tal:attributes="href view/rss_url">
                  <img tal:attributes="src string:${context/portal_url}/rss.png"
                       i18n:attributes="alt" i18n:domain="plone"
                       alt="RSS feed"/>
@@ -48,8 +48,8 @@
                 tal:attributes="class python:oddrow and 'portletItem even rtCollectionPortletItem' or 'portletItem odd rtCollectionPortletItem'">
                 <p class="rt_item">
                     <a href="#"
-                          class="tile"
-                          tal:attributes="href obj/getURL;
+                       class="tile"
+                       tal:attributes="href obj/getURL;
                                        title obj/Description">
                         <img tal:replace="structure item_icon/html_tag" />
                         <span tal:replace="obj/Title">
