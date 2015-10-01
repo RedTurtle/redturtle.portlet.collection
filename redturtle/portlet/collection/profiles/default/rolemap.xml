@@ -6,5 +6,10 @@
       <role name="Manager"/>
       <role name="Site Administrator"/>
     </permission>
+    <permission name="redturtle.portlet.collection: Manage Settings"
+                acquire="True">
+      <role name="Manager"/>
+      <role name="Site Administrator"/>
+    </permission>
   </permissions>
 </rolemap>

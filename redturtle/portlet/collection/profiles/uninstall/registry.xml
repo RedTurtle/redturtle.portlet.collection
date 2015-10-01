@@ -1,0 +1,5 @@
+<registry>
+    <record interface="redturtle.portlet.collection.interfaces.ICollectionTemplatesSettings"
+            field="template"
+            delete="True"/>
+</registry>

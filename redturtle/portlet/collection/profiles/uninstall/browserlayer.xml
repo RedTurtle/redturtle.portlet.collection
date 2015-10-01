@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+      name="redturtle.portlet.collection"
+      interface="redturtle.portlet.collection.interfaces.IRedTurtlePortletCollectionLayer"
+      remove="True"/>
+</layers>

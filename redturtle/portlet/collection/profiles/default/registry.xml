@@ -1,0 +1,3 @@
+<registry>
+    <records interface="redturtle.portlet.collection.interfaces.ICollectionTemplatesSettings" />
+</registry>

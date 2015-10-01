@@ -1,0 +1,14 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    i18n_domain="redturtle.portlet.collection">
+
+  <browser:page
+        name="redturtle-portlet-collection-settings"
+        for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+        class=".controlpanel.RedTurtlePortletCollectionSettingsControlPanel"
+        permission="redturtle.portlet.collection.ManageSettings"
+        layer="..interfaces.IRedTurtlePortletCollectionLayer"
+        />
+
+</configure>

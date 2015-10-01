@@ -10,13 +10,19 @@
     <five:registerPackage package="." initialize=".initialize" />
     <i18n:registerTranslations directory="locales" />
     <include package="plone.app.portlets" />
-    <include file="upgrades.zcml" />
 
     <!--Register permission id-->
-    <permission 
+    <permission
      id="redturtle.portlet.collection.AddCollectionPortlet"
-     title="redturtle.portlet.collection: Add redturtle portlet collection" 
+     title="redturtle.portlet.collection: Add redturtle portlet collection"
      />
+    <permission
+          id="redturtle.portlet.collection.ManageSettings"
+          title="redturtle.portlet.collection: Manage Settings"
+          />
+
+    <include package=".browser" />
+    <include file="upgrades.zcml" />
 
     <genericsetup:registerProfile
        name="default"
