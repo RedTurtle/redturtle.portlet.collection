@@ -39,6 +39,12 @@ class IRTCollectionPortlet(ICollectionPortlet):
                                   required=False,
                                   source=SearchableTextSourceBinder({'sort_on': 'getObjPositionInParent'}, default_query='path:'))
 
+    start_from = schema.Int(
+        title=_("start_from_label", default=u'Number of element to skip'),
+        # description=_("start_from_label_help", default=u''),
+        default=0,
+        required=False)
+
     no_elements_text = schema.TextLine(title=_("no_elements_text_label",
                                                default=u'Text on "no elements found"'),
                                                description=_("no_elements_text_label_help",
@@ -88,10 +94,12 @@ class Assignment(BaseCollectionPortletAssignment):
     no_elements_text = ''
     css_class = ""
     target_more = None
+    start_from = 0
 
     def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True, div_id="",
                  image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False,
                  template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None,
+                 start_from=0,
                  exclude_context=True):
         try:
             BaseCollectionPortletAssignment.__init__(self, header=header,
@@ -117,6 +125,7 @@ class Assignment(BaseCollectionPortletAssignment):
         self.no_elements_text = no_elements_text
         self.css_class = css_class
         self.target_more = target_more
+        self.start_from = start_from
 
 
 class Renderer(BaseCollectionPortletRenderer):
@@ -143,6 +152,10 @@ class Renderer(BaseCollectionPortletRenderer):
     @property
     def available(self):
         return len(self.results()) or self.data.no_elements_text
+
+    def results(self):
+        start_from = getattr(self.data, 'start_from', 0)
+        return super(Renderer, self).results()[start_from:]
 
     def get_image_src(self):
         target = self.get_image_path()

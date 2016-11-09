@@ -4,7 +4,8 @@ Changelog
 0.6 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- skip first n element
+  [mamico]
 
 
 0.5 (2015-02-17)
