@@ -1,10 +1,11 @@
 Changelog
 =========
 
-0.7 (unreleased)
+1.0.0 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Plone 5 compatibility. For Plone < 5 use 0.x versions
+  [cekk]
 
 
 0.6 (2017-01-26)
@@ -120,4 +121,3 @@ Changelog
 -----
 
 * Modification to get XHTML Strict code
-

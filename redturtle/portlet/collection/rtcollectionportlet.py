@@ -3,9 +3,8 @@
 
 from Products.ATContentTypes.interface import IATImage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
-from plone.app.form.widgets.uberselectionwidget import UberSelectionWidget
+from plone.app.vocabularies.catalog import CatalogSource
 from plone.app.portlets.portlets import base
-from plone.app.vocabularies.catalog import SearchableTextSourceBinder
 from plone.memoize.instance import memoize
 from plone.portlet.collection.collection import \
     Assignment as BaseCollectionPortletAssignment, ICollectionPortlet, \
@@ -13,68 +12,93 @@ from plone.portlet.collection.collection import \
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
 from zope.component import getMultiAdapter
-from zope.formlib import form
 from zope.interface import implements
+
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
     """
-    image_ref = schema.Choice(title=_(u"Background image"),
-                                description=_(u"Insert an image that will be shown as background under the header"),
-                                required=False,
-                                source=SearchableTextSourceBinder({'object_provides': IATImage.__identifier__},
-                                                                   default_query='path:'))
+    image_ref = schema.Choice(
+        title=_(u"Background image"),
+        description=_(
+            u"Insert an image that will be shown as background"
+            u"under the header"),
+        required=False,
+        source=CatalogSource(portal_type='Image')
+    )
 
-    link_text = schema.TextLine(title=_("custom_more_label",
-                                        default=u'Custom "more..." label'),
-                                description=_("custom_more_label_help",
-                                              default=u'Fill this to show a different label for the "more..." link'),
-                                required=False)
+    link_text = schema.TextLine(
+        title=_("custom_more_label", default=u'Custom "more..." label'),
+        description=_(
+            "custom_more_label_help",
+            default=u'Fill this to show a different label for the "more..." link'),
+        required=False
+    )
 
-
-    target_more = schema.Choice(title=_("custom_more_target_label",
-                                        default=u'Custom "more..." target'),
-                                  description=_("custom_more_target_help",
-                                                default=u'Select an object in the site, for the "more..." link. If empty, the link will be the collection.'),
-                                  required=False,
-                                  source=SearchableTextSourceBinder({'sort_on': 'getObjPositionInParent'}, default_query='path:'))
+    target_more = schema.Choice(
+        title=_(
+            "custom_more_target_label",
+            default=u'Custom "more..." target'),
+        description=_(
+            "custom_more_target_help",
+            default=u'Select an object in the site, for the "more..." link.'
+                    u' If empty, the link will be the collection.'),
+        required=False,
+        source=CatalogSource()
+    )
 
     start_from = schema.Int(
         title=_("start_from_label", default=u'Number of element to skip'),
-        # description=_("start_from_label_help", default=u''),
         default=0,
+        required=False
+    )
+
+    no_elements_text = schema.TextLine(
+        title=_(
+            "no_elements_text_label",
+            default=u'Text on "no elements found"'),
+        description=_(
+            "no_elements_text_label_help",
+            default=u'Render template can use this to show a custom text when'
+                    u' no collection shows no elements.'),
+        required=False
+    )
+
+    check_rss = schema.Bool(
+        title=_("check_rss_label", default=u'Show RSS link'),
+        description=_(
+            "check_rss_label_help",
+            default=u'Check this box to show the RSS link for the portlet.'
+                    u' If you check this and the "more..." url isn\'t a'
+                    u' collection, the RSS link will be broken.'),
+            required=False
+        )
+
+    css_class = schema.TextLine(
+        title=_("css_class_label", default=u'Portlet\'s CSS class'),
+        description=_(
+            "css_class_label_help",
+            default=u'Fill this to  assign a CSS class to the portlet'
+                    u' (for style purpose)'),
         required=False)
 
-    no_elements_text = schema.TextLine(title=_("no_elements_text_label",
-                                               default=u'Text on "no elements found"'),
-                                               description=_("no_elements_text_label_help",
-                                                             default=u'Render template can use this to show a custom text when no collection shows no elements.'),
-                                               required=False)
+    div_id = schema.TextLine(
+        title=_("div_id_label", default=u'Portlet\'s HTML id'),
+        description=_(
+            "div_id_label_help",
+            default=u'Fill this to assign an id to the portlet'
+                    u' (for style purpose)'),
+        required=False)
 
-    check_rss = schema.Bool(title=_("check_rss_label",
-                                    default=u'Show RSS link'),
-                            description=_("check_rss_label_help",
-                                          default=u'Check this box to show the RSS link for the portlet. If you check this and the "more..." url isn\'t a collection, the RSS link will be broken.'),
-                            required=False)
-
-    css_class = schema.TextLine(title=_("css_class_label",
-                                        default=u'Portlet\'s CSS class'),
-                                  description=_("css_class_label_help",
-                                                default=u'Fill this to  assign a CSS class to the portlet (for style purpose)'),
-                                  required=False)
-
-    div_id = schema.TextLine(title=_("div_id_label",
-                                     default=u'Portlet\'s HTML id'),
-                                description=_("div_id_label_help",
-                                              default=u'Fill this to  assign an id to the portlet (for style purpose)'),
-                                required=False)
-
-    template_id = schema.TextLine(title=_("template_id_label",
-                                          default=u'Template Id'),
-                                  description=_("template_id_label_help",
-                                                default=u"Id of a template to use, to render this collection\nAll other parameters here can or can't be used by the target template choosen"),
-                                  default=u"base_collection_portlet_view",
-                                  required=True)
+    template_id = schema.TextLine(
+        title=_("template_id_label", default=u'Template Id'),
+        description=_(
+            "template_id_label_help",
+            default=u"Id of a template to use, to render this collection\n"
+                    u"All other parameters here can or can't be used by the"
+                    u" target template choosen"),
+        default=u"base_collection_portlet_view",
+        required=True)
 
 
 class Assignment(BaseCollectionPortletAssignment):
@@ -96,26 +120,33 @@ class Assignment(BaseCollectionPortletAssignment):
     target_more = None
     start_from = 0
 
-    def __init__(self, header=u"", target_collection=None, limit=None, random=False, show_more=True, div_id="",
-                 image_ref=None, link_text=u'', link_value='', check_rss=False, show_dates=False,
-                 template_id='base_collection_portlet_view', no_elements_text='', css_class="", target_more=None,
-                 start_from=0,
-                 exclude_context=True):
+    def __init__(
+        self, header=u"", target_collection=None, limit=None, random=False,
+        show_more=True, div_id="", image_ref=None, link_text=u'',
+        link_value='', check_rss=False, show_dates=False,
+        template_id='base_collection_portlet_view', no_elements_text='',
+        css_class="", target_more=None, start_from=0, exclude_context=True):
+
         try:
-            BaseCollectionPortletAssignment.__init__(self, header=header,
-                                                     target_collection=target_collection,
-                                                     limit=limit, random=random,
-                                                     show_more=show_more,
-                                                     show_dates=show_dates,
-                                                     exclude_context=exclude_context)
+            BaseCollectionPortletAssignment.__init__(
+                self,
+                header=header,
+                target_collection=target_collection,
+                limit=limit, random=random,
+                show_more=show_more,
+                show_dates=show_dates,
+                exclude_context=exclude_context)
         except TypeError:
-            # Lord of Immortals, forgive me for that ugliness but plone.portlet.collection 2.1.6 forced me
-            # to do this
-            BaseCollectionPortletAssignment.__init__(self, header=header,
-                                                     target_collection=target_collection,
-                                                     limit=limit, random=random,
-                                                     show_more=show_more,
-                                                     show_dates=show_dates)
+            # Lord of Immortals, forgive me for that ugliness but
+            # plone.portlet.collection 2.1.6 forced me to do this
+            BaseCollectionPortletAssignment.__init__(
+                self,
+                header=header,
+                target_collection=target_collection,
+                limit=limit, random=random,
+                show_more=show_more,
+                show_dates=show_dates)
+
         self.image_ref = image_ref
         self.link_text = link_text
         self.check_rss = check_rss
@@ -159,12 +190,12 @@ class Renderer(BaseCollectionPortletRenderer):
 
     def get_image_src(self):
         target = self.get_image_path()
-        #this approach is better if you need to use diazo and replace
-        #'image_preview' with some other scale
+        # this approach is better if you need to use diazo and replace
+        # 'image_preview' with some other scale
         return target.absolute_url() + '/image_preview'
-        #If you want use images view....
-        #scales = getMultiAdapter((target, self.request), name="images")
-        #return scales.tag('image', scale='preview')
+        # If you want use images view....
+        # scales = getMultiAdapter((target, self.request), name="images")
+        # return scales.tag('image', scale='preview')
 
     def get_image_path(self):
         target_path = self.data.image_ref
@@ -177,7 +208,8 @@ class Renderer(BaseCollectionPortletRenderer):
         if not target_path:
             return None
 
-        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (self.context, self.request), name=u'plone_portal_state')
         portal = portal_state.portal()
         return portal.restrictedTraverse(target_path, default=None)
 
@@ -215,7 +247,8 @@ class Renderer(BaseCollectionPortletRenderer):
         if not target_path:
             return None
 
-        portal_state = getMultiAdapter((self.context, self.request), name=u'plone_portal_state')
+        portal_state = getMultiAdapter(
+            (self.context, self.request), name=u'plone_portal_state')
         portal = portal_state.portal()
         return portal.restrictedTraverse(target_path, default=None)
 
@@ -227,13 +260,12 @@ class AddForm(base.AddForm):
     zope.formlib which fields to display. The create() method actually
     constructs the assignment that is being added.
     """
-    form_fields = form.Fields(IRTCollectionPortlet)
-    form_fields['target_collection'].custom_widget = UberSelectionWidget
-    form_fields['image_ref'].custom_widget = UberSelectionWidget
-    form_fields['target_more'].custom_widget = UberSelectionWidget
+    schema = IRTCollectionPortlet
 
     label = _(u"Add Collection portlet with custom view")
-    description = _(u"This portlet display a listing of items from a Collection.")
+    description = _(
+        u"This portlet display a listing of items from a Collection."
+    )
 
     def create(self, data):
         return Assignment(**data)
@@ -245,9 +277,9 @@ class EditForm(base.EditForm):
     This is registered with configure.zcml. The form_fields variable tells
     zope.formlib which fields to display.
     """
-    form_fields = form.Fields(IRTCollectionPortlet)
-    form_fields['target_collection'].custom_widget = UberSelectionWidget
-    form_fields['image_ref'].custom_widget = UberSelectionWidget
-    form_fields['target_more'].custom_widget = UberSelectionWidget
+    schema = IRTCollectionPortlet
+
     label = _(u"Edit Collection portlet with custom view")
-    description = _(u"This portlet display a listing of items from a Collection.")
+    description = _(
+        u"This portlet display a listing of items from a Collection."
+    )

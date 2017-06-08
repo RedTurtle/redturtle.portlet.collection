@@ -6,7 +6,7 @@ A collection portlet that use a custom view template to show search results.
 User must manually put inside the "*Template Id*" field of the portlet the id of a Zope Page Template,
 commonly available in *portal_skins*.
 
-Please note: you can use a Zope 3 style @@view. 
+Please note: you can use a Zope 3 style @@view.
 
 Seems crappy?
 -------------
@@ -23,6 +23,14 @@ find inside the source of this product: check the
 
 __ https://github.com/RedTurtle/redturtle.portlet.collection/blob/master/redturtle/portlet/collection/skins/customizable_collection_portlet/base_collection_portlet_view.pt
 
+Compatibility
+=============
+
+Plone >= 5: >= 1.x.x versions
+
+Plone < 5: 0.x versions
+
+
 Credits
 =======
 
@@ -34,10 +42,10 @@ Developed with the support of:
      :alt: CCIAA Ferrara - logo
 
 * `Azienda USL Ferrara`__
-  
+
   .. image:: http://www.ausl.fe.it/logo_ausl.gif
      :alt: Azienda USL's logo
-  
+
 * `Regione Emilia Romagna`__
 
 All of them supports the `PloneGov initiative`__.
@@ -55,4 +63,3 @@ This product was developed by RedTurtle Technology team.
 .. image:: http://www.redturtle.it/redturtle_banner.png
    :alt: RedTurtle Technology Site
    :target: http://www.redturtle.it/
-
