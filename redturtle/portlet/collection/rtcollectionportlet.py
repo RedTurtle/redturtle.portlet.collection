@@ -121,7 +121,7 @@ class Assignment(BaseCollectionPortletAssignment):
     start_from = 0
 
     def __init__(
-        self, header=u"", target_collection=None, limit=None, random=False,
+        self, header=u"", uid=None, limit=None, random=False,
         show_more=True, div_id="", image_ref=None, link_text=u'',
         link_value='', check_rss=False, show_dates=False,
         template_id='base_collection_portlet_view', no_elements_text='',
@@ -131,7 +131,7 @@ class Assignment(BaseCollectionPortletAssignment):
             BaseCollectionPortletAssignment.__init__(
                 self,
                 header=header,
-                target_collection=target_collection,
+                uid=uid,
                 limit=limit, random=random,
                 show_more=show_more,
                 show_dates=show_dates,
@@ -142,7 +142,7 @@ class Assignment(BaseCollectionPortletAssignment):
             BaseCollectionPortletAssignment.__init__(
                 self,
                 header=header,
-                target_collection=target_collection,
+                uid=uid,
                 limit=limit, random=random,
                 show_more=show_more,
                 show_dates=show_dates)
