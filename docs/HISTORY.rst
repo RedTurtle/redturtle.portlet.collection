@@ -1,13 +1,7 @@
 Changelog
 =========
 
-1.0.1 (unreleased)
-------------------
-
-- Nothing changed yet.
-
-
-1.0.0 (2017-09-13)
+1.0.0 (11/10/2017)
 ------------------
 
 - Plone 5 compatibility. For Plone < 5 use 0.x versions
