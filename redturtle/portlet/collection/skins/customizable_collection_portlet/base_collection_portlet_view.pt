@@ -16,7 +16,6 @@
 
     <dl class=""
         tal:define="collection_url view/collection_url;
-                    getIcon nocall:plone_view/getIcon;
                     css_class view/data/css_class|nothing;"
         tal:attributes="id view/data/div_id;
                         class python:css_class and 'portlet rtCollectionPortlet '+css_class or 'portlet rtCollectionPortlet'">
@@ -42,7 +41,6 @@
         <tal:events tal:repeat="obj query_results">
             <dd class="portletItem rtCollectionPortletItem"
                 tal:define="oddrow repeat/obj/odd;
-                            item_icon python:getIcon(obj);
                             item_path obj/getPath;
                             item_check_path python:item_path.replace('/'.join(portal.getPhysicalPath()), '');"
                 tal:attributes="class python:oddrow and 'portletItem even rtCollectionPortletItem' or 'portletItem odd rtCollectionPortletItem'">
@@ -51,7 +49,6 @@
                        class="tile"
                        tal:attributes="href obj/getURL;
                                        title obj/Description">
-                        <img tal:replace="structure item_icon/html_tag" />
                         <span tal:replace="obj/Title">
                              Title
                         </span>

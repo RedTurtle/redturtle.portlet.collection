@@ -121,7 +121,8 @@ class Assignment(BaseCollectionPortletAssignment):
     start_from = 0
 
     def __init__(
-        self, header=u"", uid=None, limit=None, random=False,
+        self, header=u"", uid=None, limit=None, random=False, thumb_scale=None,
+        no_thumbs=False, no_icons=False,
         show_more=True, div_id="", image_ref=None, link_text=u'',
         link_value='', check_rss=False, show_dates=False,
         template_id='base_collection_portlet_view', no_elements_text='',
