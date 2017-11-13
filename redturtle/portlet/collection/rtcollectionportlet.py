@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-
-
-from Products.ATContentTypes.interface import IATImage
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.vocabularies.catalog import CatalogSource
 from plone.app.portlets.portlets import base
@@ -31,7 +28,8 @@ class IRTCollectionPortlet(ICollectionPortlet):
         title=_("custom_more_label", default=u'Custom "more..." label'),
         description=_(
             "custom_more_label_help",
-            default=u'Fill this to show a different label for the "more..." link'),
+            default=u'Fill this to show a different"\
+                    " label for the "more..." link'),
         required=False
     )
 
@@ -120,13 +118,14 @@ class Assignment(BaseCollectionPortletAssignment):
     target_more = None
     start_from = 0
 
-    def __init__(
-        self, header=u"", uid=None, limit=None, random=False, thumb_scale=None,
-        no_thumbs=False, no_icons=False,
-        show_more=True, div_id="", image_ref=None, link_text=u'',
-        link_value='', check_rss=False, show_dates=False,
-        template_id='base_collection_portlet_view', no_elements_text='',
-        css_class="", target_more=None, start_from=0, exclude_context=True):
+    def __init__(self, header=u"", uid=None, limit=None,
+                 random=False, show_more=True, show_dates=False,
+                 no_icons=False, no_thumbs=False,
+                 thumb_scale=None, div_id="", image_ref=None, link_text=u'',
+                 link_value='', check_rss=False,
+                 template_id='base_collection_portlet_view',
+                 no_elements_text='', css_class="", target_more=None,
+                 start_from=0, exclude_context=True):
 
         try:
             BaseCollectionPortletAssignment.__init__(
@@ -136,7 +135,10 @@ class Assignment(BaseCollectionPortletAssignment):
                 limit=limit, random=random,
                 show_more=show_more,
                 show_dates=show_dates,
-                exclude_context=exclude_context)
+                exclude_context=exclude_context,
+                no_icons=no_icons,
+                no_thumbs=no_thumbs,
+                thumb_scale=thumb_scale)
         except TypeError:
             # Lord of Immortals, forgive me for that ugliness but
             # plone.portlet.collection 2.1.6 forced me to do this
