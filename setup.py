@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0'
+version = '1.0.dev0'
 
 setup(name='redturtle.portlet.collection',
       version=version,
@@ -16,6 +16,7 @@ setup(name='redturtle.portlet.collection',
         "Framework :: Plone :: 4.1",
         "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.1",
         "Programming Language :: Python",
         "Development Status :: 5 - Production/Stable",
         "Topic :: Software Development :: Libraries :: Python Modules",

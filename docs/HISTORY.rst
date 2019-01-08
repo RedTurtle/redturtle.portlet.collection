@@ -1,6 +1,12 @@
 Changelog
 =========
 
+1.0 (08/12/2019)
+----------------
+
+- update metadata in setup.py and history
+  [lucabel]
+
 1.0.0 (11/10/2017)
 ------------------
 
