@@ -9,8 +9,9 @@ from plone.portlet.collection.collection import \
 from redturtle.portlet.collection import RTCollectionPortletMessageFactory as _
 from zope import schema
 from zope.component import getMultiAdapter
-from zope.interface import implements
+from zope.interface import implementer
 
+from plone import api
 
 class IRTCollectionPortlet(ICollectionPortlet):
     """The collection portlet that handle in a better way results view
@@ -99,13 +100,13 @@ class IRTCollectionPortlet(ICollectionPortlet):
         required=True)
 
 
+@implementer(IRTCollectionPortlet)
 class Assignment(BaseCollectionPortletAssignment):
     """Portlet assignment.
 
     This is what is actually managed through the portlets UI and associated
     with columns.
     """
-    implements(IRTCollectionPortlet)
 
     image_ref = None
     link_text = u''
@@ -192,16 +193,28 @@ class Renderer(BaseCollectionPortletRenderer):
         return super(Renderer, self).results()[start_from:]
 
     def get_image_src(self):
-        target = self.get_image_path()
+        #target = self.get_image_path()
+        target = api.content.get(UID=self.data.image_ref)
         # this approach is better if you need to use diazo and replace
         # 'image_preview' with some other scale
-        return target.absolute_url() + '/image_preview'
+        if target:
+            # https://docs.plone.org/develop/plone/images/content.html
+            return target.absolute_url() + '/@@images/image/mini'
+        else:
+            return ''
         # If you want use images view....
         # scales = getMultiAdapter((target, self.request), name="images")
         # return scales.tag('image', scale='preview')
 
     def get_image_path(self):
-        target_path = self.data.image_ref
+        # redundant/obsolete code!
+        #target_path = self.data.image_ref
+        img = api.content.get(UID=self.data.image_ref)
+        if img:
+            target_path = img.absolute_url(1)
+        else:
+            target_path = ''
+
         if not target_path:
             return None
 
@@ -211,9 +224,7 @@ class Renderer(BaseCollectionPortletRenderer):
         if not target_path:
             return None
 
-        portal_state = getMultiAdapter(
-            (self.context, self.request), name=u'plone_portal_state')
-        portal = portal_state.portal()
+        portal = api.portal.get()
         return portal.restrictedTraverse(target_path, default=None)
 
     def collection_url(self):
