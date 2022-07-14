@@ -26,6 +26,8 @@ __ https://github.com/RedTurtle/redturtle.portlet.collection/blob/master/redturt
 Compatibility
 =============
 
+Plone >= 5.2: >= 2.x.x versions
+
 Plone >= 5: >= 1.x.x versions
 
 Plone < 5: 0.x versions
